@@ -15,11 +15,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();    
+Route::controller(UserController::class)->prefix('user')->group(function () {
+    Route::post('/register', 'new');
+    Route::post('/login', 'login');
 });
 
-Route::controller(UserController::class)->prefix('user')->group(function () {
-    Route::get('/register', 'new');
-    Route::post('/login', 'login');
+Route::middleware('auth:sanctum')->controller(UserController::class)->prefix('user')->group(function () {
+    Route::get('/', 'index');
 });

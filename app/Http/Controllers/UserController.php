@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index(){
+    protected $maxAttempts = 5;
+    protected $decayMinutes = 5;
 
+    public function index(){
         try {
             return response()->json([
                 'user' => auth()->user()
@@ -55,8 +57,6 @@ class UserController extends Controller
                 'message' => 'Invalid credentials'
             ], 401);
         }
-
-        $bearer_token = $request->user()->createToken('API Token')->plainTextToken;
 
         return response()->json([
             'access_token' => $request->user()->createToken('API Token')->plainTextToken

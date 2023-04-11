@@ -9,8 +9,11 @@ class ProductController extends Controller
 {
     public function new(Request $request)
     {
-        $product = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|unique:products',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric'
         ]);
 
         Product::create([

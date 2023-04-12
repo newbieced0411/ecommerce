@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->integer('quantity');
-            $table->integer('price');
-            $table->timestamps();
-        });
+        if (Schema::hasColumn('orders', 'quantity')) {
+            Schema::table('orders', function (Blueprint $table) {
+                $table->dropColumn('quantity');
+                $table->dropColumn('price');
+            });
+        }
     }
 
     /**
@@ -25,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::table('orders', function (Blueprint $table) {
+
+        });
     }
 };

@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        return response()->json([
+            'products' => Product::all()
+        ], 200);
+    }
+    
     public function new(Request $request)
     {
         $request->validate([

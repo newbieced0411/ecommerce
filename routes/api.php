@@ -29,10 +29,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(OrderController::class)->prefix('order')->group(function () {
         Route::get('/', 'index');
-        Route::post('/add', 'new');
+        Route::post('/{product}', 'new');
     });
 
     Route::controller(ProductController::class)->prefix('product')->group(function () {
+        Route::get('/', 'index');
         Route::post('/add', 'new');
     });
 });

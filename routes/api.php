@@ -29,11 +29,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(OrderController::class)->prefix('order')->group(function () {
         Route::get('/', 'index');
+        Route::get('/{order}', 'show');
         Route::post('/{product}', 'new');
+        Route::patch('/{order}/edit', 'update');
     });
 
     Route::controller(ProductController::class)->prefix('product')->group(function () {
         Route::get('/', 'index');
+        Route::get('/{product}', 'show');
         Route::post('/add', 'new');
+        Route::patch('/{product}/edit', 'update');
     });
 });

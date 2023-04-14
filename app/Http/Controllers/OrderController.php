@@ -12,7 +12,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        return auth()->user()->id;
+        return response()->json([
+            'orders' => Order::orderBy('created_at', 'desc')->get()
+        ]);
     }
 
     public  function new(Product $product, Request $request)
@@ -21,9 +23,9 @@ class OrderController extends Controller
             'quantity' => 'required|integer'
         ]);
 
-        if($product->stock <= 0){
+        if($product->stock <= 0 AND $product->stock < $request->quantity){
             return response()->json([
-                'message' => $product->name . ' is out of stock.'
+                'message' => 'ailed to order this ' . $product->name . ' is out of stock.'
             ]);
         }
 

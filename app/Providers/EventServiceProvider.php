@@ -25,7 +25,14 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // modify the Route Model Binding error message
+        $this->app['router']->bind('product', function ($value) {
+            $product = \App\Models\Product::find($value);
+            if (!$product) {
+                abort(404, "Record #{$value} not found.");
+            }
+            return $product;
+        });
     }
 
     /**
